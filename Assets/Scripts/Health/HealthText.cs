@@ -1,27 +1,21 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
-public class HealthText : MonoBehaviour
+public class HealthText : HealthIndicator
 {
-    [SerializeField] private Health _health;
     [SerializeField] private TextMeshProUGUI _currentText;
     [SerializeField] private TextMeshProUGUI _maxText;
 
-    private void Start()
+    protected override void Start()
     {
-        _health.CurrentChanged += OnCurrentChanged;
-        SetText(_currentText, _health.Current);
-        SetText(_maxText, _health.Max);
+        base.Start();
+        SetText(_currentText, HealthComponent.Current);
+        SetText(_maxText, HealthComponent.Max);
     }
 
-    private void OnDisable()
+    protected override void OnCurrentChanged()
     {
-        _health.CurrentChanged -= OnCurrentChanged;
-    }
-
-    private void OnCurrentChanged()
-    {
-        SetText(_currentText, _health.Current);
+        SetText(_currentText, HealthComponent.Current);
     }
 
     private void SetText(TextMeshProUGUI textMesh, float healthValue)

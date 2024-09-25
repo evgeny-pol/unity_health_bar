@@ -1,31 +1,24 @@
 using UnityEngine;
 
 [RequireComponent(typeof(ResourceBar))]
-public class HealthBar : MonoBehaviour
+public class HealthBar : HealthIndicator
 {
-    [SerializeField] private Health _health;
-
     private ResourceBar _resourceBar;
 
-    private float FillCoef => _health.Current / _health.Max;
+    private float FillCoef => HealthComponent.Current / HealthComponent.Max;
 
     private void Awake()
     {
         _resourceBar = GetComponent<ResourceBar>();
     }
 
-    private void Start()
+    protected override void Start()
     {
-        _health.CurrentChanged += UpdateCurrentHealth;
+        base.Start();
         _resourceBar.SetInitialFillCoef(FillCoef);
     }
 
-    private void OnDisable()
-    {
-        _health.CurrentChanged -= UpdateCurrentHealth;
-    }
-
-    private void UpdateCurrentHealth()
+    protected override void OnCurrentChanged()
     {
         _resourceBar.SetFillCoef(FillCoef);
     }
