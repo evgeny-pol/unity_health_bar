@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class HealthIndicator : MonoBehaviour
 {
@@ -6,7 +6,7 @@ public abstract class HealthIndicator : MonoBehaviour
 
     protected Health HealthComponent => _health;
 
-    protected virtual void Start()
+    protected virtual void OnEnable()
     {
         _health.CurrentChanged += OnCurrentChanged;
     }

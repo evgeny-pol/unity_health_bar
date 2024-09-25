@@ -6,9 +6,9 @@ public class HealthText : HealthIndicator
     [SerializeField] private TextMeshProUGUI _currentText;
     [SerializeField] private TextMeshProUGUI _maxText;
 
-    protected override void Start()
+    protected override void OnEnable()
     {
-        base.Start();
+        base.OnEnable();
         SetText(_currentText, HealthComponent.Current);
         SetText(_maxText, HealthComponent.Max);
     }

@@ -8,6 +8,32 @@ public class SmoothedResourceBar : ResourceBar
     private float _targetFillCoef;
     private Coroutine _updateFillCoroutine;
 
+    private void Awake()
+    {
+        _targetFillCoef = FillCoef;
+    }
+
+    private void OnEnable()
+    {
+        if (FillCoef != _targetFillCoef)
+            _updateFillCoroutine ??= StartCoroutine(UpdateFill());
+    }
+
+    private void OnDisable()
+    {
+        if (_updateFillCoroutine != null)
+        {
+            StopCoroutine(_updateFillCoroutine);
+            _updateFillCoroutine = null;
+        }
+    }
+
+    public override void SetInitialFillCoef(float fillCoef)
+    {
+        _targetFillCoef = fillCoef;
+        base.SetInitialFillCoef(fillCoef);
+    }
+
     public override void SetFillCoef(float fillCoef)
     {
         _targetFillCoef = fillCoef;
@@ -16,7 +42,7 @@ public class SmoothedResourceBar : ResourceBar
 
     private IEnumerator UpdateFill()
     {
-        while (enabled)
+        while (enabled && FillCoef != _targetFillCoef)
         {
             float fillSpeed = _fillSpeedCurve.Evaluate(Mathf.Abs(_targetFillCoef - FillCoef));
             float newFill = Mathf.MoveTowards(FillCoef, _targetFillCoef, fillSpeed * Time.deltaTime);

@@ -12,9 +12,9 @@ public class HealthBar : HealthIndicator
         _resourceBar = GetComponent<ResourceBar>();
     }
 
-    protected override void Start()
+    protected override void OnEnable()
     {
-        base.Start();
+        base.OnEnable();
         _resourceBar.SetInitialFillCoef(FillCoef);
     }
 

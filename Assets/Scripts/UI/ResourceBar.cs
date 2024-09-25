@@ -6,7 +6,7 @@ public class ResourceBar : MonoBehaviour
 
     public float FillCoef { get; private set; } = 1;
 
-    public void SetInitialFillCoef(float fillCoef) => SetFillCoefAndUpdate(fillCoef);
+    public virtual void SetInitialFillCoef(float fillCoef) => SetFillCoefAndUpdate(fillCoef);
 
     public virtual void SetFillCoef(float fillCoef) => SetFillCoefAndUpdate(fillCoef);
 
